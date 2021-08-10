@@ -1,0 +1,17 @@
+*{
+    font-family: 'Red Hat Text', sans-serif;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar h1{
+    display: inline-block;
+}
+
+.navbar .links > *{
+    padding: 5px;
+}
