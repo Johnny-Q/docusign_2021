@@ -58,7 +58,7 @@ const AuditComponent = ({ audit, user }) => {
         }}
       >
         <h3>{audit.name}</h3>
-        <p>Review cycle #{audit.cycles.length}</p>
+        <p>Review cycle #{audit.cycle}</p>
       </div>
       <p style={{ margin: 0 }}>
         Role: {audit.facilitator === user._id ? "Facilitator" : "Reviewer"}
