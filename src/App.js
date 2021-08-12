@@ -8,7 +8,7 @@ import LogIn from "./pages/LogIn";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import LogOut from "./pages/LogOut";
-import Test from "./pages/Test";
+import GraphicsPopupTest from "./pages/GraphicsPopupTest";
 
 function App() {
     return (
@@ -23,7 +23,7 @@ function App() {
             <Route path="/register" exact component={Register} />
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/logout" exact component={LogOut} />
-            <Route path="/test" exact component={Test}/>
+            <Route path="/test" exact component={GraphicsPopupTest}/>
         </div>
     );
 }
