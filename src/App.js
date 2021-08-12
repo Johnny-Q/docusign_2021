@@ -7,25 +7,36 @@ import About from "./pages/About";
 import LogIn from "./pages/LogIn";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import NewAudit from "./pages/NewAudit";
 import LogOut from "./pages/LogOut";
 import GraphicsPopupTest from "./pages/GraphicsPopupTest";
 
 function App() {
-    return (
-        //style is to center
-        <div className="App" style={{ width: "90%", maxWidth: "1000px", position: "absolute", left: "50%", transform: "translate(-50%, 0)" }}>
-            <Suspense fallback={DefaultNavbar}>
-                <Navbar />
-            </Suspense>
-            <Route path="/" exact component={Home} />
-            <Route path="/about" exact component={About} />
-            <Route path= "/login" exact component={LogIn} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/logout" exact component={LogOut} />
-            <Route path="/test" exact component={GraphicsPopupTest}/>
-        </div>
-    );
+  return (
+    //style is to center
+    <div
+      className="App"
+      style={{
+        width: "90%",
+        maxWidth: "1000px",
+        position: "absolute",
+        left: "50%",
+        transform: "translate(-50%, 0)"
+      }}
+    >
+      <Suspense fallback={DefaultNavbar}>
+        <Navbar />
+      </Suspense>
+      <Route path="/" exact component={Home} />
+      <Route path="/about" exact component={About} />
+      <Route path="/login" exact component={LogIn} />
+      <Route path="/register" exact component={Register} />
+      <Route path="/dashboard" exact component={Dashboard} />
+      <Route path="/newaudit" exact component={NewAudit} />
+      <Route path="/logout" exact component={LogOut} />
+      <Route path="/test" exact component={GraphicsPopupTest} />
+    </div>
+  );
 }
 
 export default App;

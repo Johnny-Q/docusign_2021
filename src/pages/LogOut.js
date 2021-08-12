@@ -1,15 +1,13 @@
-import { useEffect } from 'react';
-import { logout } from '../logic/auth';
+import { useEffect } from "react";
+import { logout } from "../logic/auth";
 
 const LogOut = () => {
+  useEffect(() => {
+    logout();
+    window.location.assign("/login");
+  }, []);
 
-    useEffect(() => {
-        logout();
-    }, [])
-
-    return (
-        <div>Logging out...</div>
-    )
-}
+  return <div>Logging out...</div>;
+};
 
 export default LogOut;
