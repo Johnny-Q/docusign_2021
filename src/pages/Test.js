@@ -5,22 +5,30 @@ import MapView from "@arcgis/core/views/MapView";
 import Sketch from "@arcgis/core/widgets/Sketch";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import Graphic from "@arcgis/core/Graphic";
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import Layer from "@arcgis/core/layers/Layer";
+import PortalItem from "@arcgis/core/portal/PortalItem"
 const Test = () => {
     const div = useRef();
     esriConfig.apiKey = process.env.REACT_APP_ESRI_KEY;
+    console.log(esriConfig.apiKey);
     const graphicsLayer = new GraphicsLayer();
-    graphicsLayer.add(Graphic.fromJSON({"geometry":{"spatialReference":{"latestWkid":3857,"wkid":102100},"rings":[[[-8825134.908770902,5420667.1647201255],[-8825148.097936284,5420415.500452734],[-8825187.520929161,5420166.593471725],[-8825252.745822985,5419923.170854061],[-8825343.058000162,5419687.899588881],[-8825457.467981584,5419463.357357409],[-8825594.722267555,5419252.004291314],[-8825753.31707139,5419056.156019015],[-8825931.51479523,5418877.958295176],[-8826127.363067526,5418719.363491345],[-8826338.716133619,5418582.1092053745],[-8826563.258365095,5418467.699223953],[-8826798.529630272,5418377.387046775],[-8827041.952247934,5418312.1621529525],[-8827290.859228946,5418272.739160069],[-8827542.523496335,5418259.549994692],[-8827794.187763726,5418272.739160069],[-8828043.09474474,5418312.1621529525],[-8828286.517362403,5418377.387046775],[-8828521.78862758,5418467.699223953],[-8828746.330859052,5418582.1092053745],[-8828957.683925146,5418719.363491345],[-8829153.532197444,5418877.958295176],[-8829331.729921285,5419056.156019015],[-8829490.32472512,5419252.004291314],[-8829627.579011086,5419463.357357409],[-8829741.98899251,5419687.899588881],[-8829832.301169688,5419923.170854061],[-8829897.526063511,5420166.593471725],[-8829936.94905639,5420415.500452734],[-8829950.138221769,5420667.1647201255],[-8829936.94905639,5420918.828987517],[-8829897.526063511,5421167.7359685255],[-8829832.301169688,5421411.158586194],[-8829741.98899251,5421646.42985137],[-8829627.579011086,5421870.972082842],[-8829490.32472512,5422082.325148937],[-8829331.729921285,5422278.173421235],[-8829153.532197444,5422456.371145076],[-8828957.683925146,5422614.965948906],[-8828746.330859052,5422752.2202348765],[-8828521.78862758,5422866.630216298],[-8828286.517362403,5422956.942393476],[-8828043.09474474,5423022.167287299],[-8827794.187763726,5423061.590280182],[-8827542.523496335,5423074.779445559],[-8827290.859228946,5423061.590280182],[-8827041.952247934,5423022.167287299],[-8826798.529630272,5422956.942393476],[-8826563.258365095,5422866.630216298],[-8826338.716133619,5422752.2202348765],[-8826127.363067526,5422614.965948906],[-8825931.51479523,5422456.371145076],[-8825753.31707139,5422278.173421235],[-8825594.722267555,5422082.325148937],[-8825457.467981584,5421870.972082842],[-8825343.058000162,5421646.42985137],[-8825252.745822985,5421411.158586194],[-8825187.520929161,5421167.7359685255],[-8825148.097936284,5420918.828987517],[-8825134.908770902,5420667.1647201255]]]},"symbol":{"type":"esriSFS","color":[150,150,150,51],"outline":{"type":"esriSLS","color":[50,50,50,255],"width":2,"style":"esriSLSSolid"},"style":"esriSFSSolid"},"attributes":{}}));
+
     const [toggle, setToggle] = useState(false);
+    const [layers, setLayers] = useState([graphicsLayer]);
+    const [layerId, setLayerId] = useState("");
+    const [graphicsJSON, setGraphicsJSON] = useState("");
+
+    const map = new Map({
+        basemap: "arcgis-topographic"
+    })
+
     useEffect(() => {
-        const map = new Map({
-            basemap: "arcgis-topographic", // Basemap layer service
-            layers: [graphicsLayer],
-        });
 
         const view = new MapView({
             map: map,
-            center: [-79.3, 43.65], // Longitude, latitude
-            zoom: 13, // Zoom level
+            center: [-118.80543,34.02700], // Longitude, latitude
+            zoom: 10, // Zoom level
             container: div.current, // Div element
         });
 
@@ -41,19 +49,41 @@ const Test = () => {
     }, [toggle]);
 
     return (
-        <>
-            <div ref={div} style={{ width: "1000px", height: "1000px" }}></div>
+        <div style={{ "display": "flex", "flexDirection": "column", "alignItems": "center" }}>
+            <div>
+                <h1>Map builder</h1>
+                <input type="text" placeholder="feature layer id" value={layerId} onChange={(e) => { setLayerId(e.target.value) }} />
+                <button onClick={async () => {
+                    // const layer = await Layer.fromPortalItem(new PortalItem({
+                    //     "id": layerId,
+                    // }));
+
+                    // console.log(layer);
+                    const layer = new FeatureLayer({
+                        id: "b684f4461e5446efa7c0c1672739896f",
+                        apiKey: esriConfig.apiKey
+                    });
+
+                    map.add(layer);
+                }}>
+                    load feature layer
+                </button>
+                <textarea type="text" placeholder="graphics json array" value={graphicsJSON} onChange={(e) => { setGraphicsJSON(e.target.value) }}></textarea>
+                <button onClick={() => {
+                    setToggle(!toggle);
+                }}>Update Map</button>
+            </div>
+            <div ref={div} style={{ width: "500px", height: "500px" }}></div>
             <button
                 onClick={() => {
-                    for(const graphic of graphicsLayer.graphics.toArray()){
+                    for (const graphic of graphicsLayer.graphics.toArray()) {
                         console.log(JSON.stringify(graphic.toJSON()));
                     }
-                    setToggle(!toggle);
                 }}
             >
-                Refresh
+                Export Graphics Layer
             </button>
-        </>
+        </div>
     );
 };
 
