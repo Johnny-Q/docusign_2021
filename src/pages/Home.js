@@ -31,8 +31,8 @@ const Home = () => {
           Streamlining conservation science and mapping lifecycles
         </h2>
         <p style={{ textAlign: "left", fontSize: "1.2em" }}>
-          Optimizing the process of reviewing and approving conservation maps in
-          accordance to Open Conservation Standards.
+          AuditPal optimizes the process of reviewing and approving conservation
+          maps in accordance to Open Conservation Standards.
         </p>
       </div>
       <div style={{ width: "30vw" }}>

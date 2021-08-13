@@ -33,7 +33,7 @@ function document(auditName, mapID, facilitator, reviewers) {
         color: darkblue;">Facilitated by ${facilitator.name} (${
     facilitator.email
   })</h2>
-  <a href="https://docusign2021.web.app/viewmap/${mapID}">Link to map: https://docusign2021.web.app/viewmap/${mapID}</a>
+  <a href="http://localhost:3000/viewmap/${mapID}">Link to map: http://localhost:3000/viewmap/${mapID}</a>
       <!-- Note the anchor tag for the signature field is in white. -->
       ${reviewers.map(
         reviewer => `
