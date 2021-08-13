@@ -9,8 +9,9 @@ const Review = new Schema({
     default: "pending",
     enum: ["pending", "approved", "changes requested"]
   },
-  comments: String // Comments added by the reviewer
-  // Option to add images? How would this be handled
+  comments: String, // Comments added by the reviewer
+  file: String, // Filenames for each file uploaded associated with the review
+  screenshot: String
 });
 
 module.exports = mongoose.model("Review", Review);

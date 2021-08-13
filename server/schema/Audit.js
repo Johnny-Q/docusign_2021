@@ -6,11 +6,13 @@ const Audit = new Schema({
   facilitator: { type: Schema.Types.ObjectId, ref: "User" }, // Email of the user who initiated the conversation
   reviewers: [{ type: Schema.Types.ObjectId, ref: "User" }], // Stakeholders and experts added to give feedback to the conversation
   webmapID: String, // PortalItem ID of the webmap from ArcGIS
+  image: String,
   cycle: Number,
   cycles: [
     {
       reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }], // Array containing each review made by a reviewer
-      finalLayer: String, // Final iteration of the cycle made by the facilitator based on the suggestions
+      image: String,
+      // finalLayer: String, // Final iteration of the cycle made by the facilitator based on the suggestions
       comments: String // Comments made by the facilitator to add additional context for the next review cycle
     }
   ],

@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const User = new Schema({
   name: String,
   email: String,
+  docusign: String,
   password: String,
   audits: [{ type: Schema.Types.ObjectId, ref: "Audit" }]
 });

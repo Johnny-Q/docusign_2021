@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const login = (email, password) => {
   return axios
-    .post("http://localhost:5000/api/login", {
+    .post("https://docusign2021.herokuapp.com/api/login", {
       email: email,
       password: password
     })
@@ -17,7 +17,7 @@ export const login = (email, password) => {
 
 export const register = (name, email, password) => {
   return axios
-    .post("http://localhost:5000/api/register", {
+    .post("https://docusign2021.herokuapp.com/api/register", {
       name: name,
       email: email,
       password: password
@@ -31,11 +31,14 @@ export const register = (name, email, password) => {
 };
 
 export const verifyToken = async token => {
-  const response = await axios.get("http://localhost:5000/api/verifytoken", {
-    headers: {
-      Authorization: `Bearer ${window.localStorage.getItem("token")}`
+  const response = await axios.get(
+    "https://docusign2021.herokuapp.com/api/verifytoken",
+    {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`
+      }
     }
-  });
+  );
 
   return response.status === 204;
 };
@@ -45,11 +48,14 @@ export const logout = () => {
 };
 
 export const currentUser = async () => {
-  const response = await axios.get("http://localhost:5000/api/get-user", {
-    headers: {
-      Authorization: `Bearer ${window.localStorage.getItem("token")}`
+  const response = await axios.get(
+    "https://docusign2021.herokuapp.com/api/get-user",
+    {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`
+      }
     }
-  });
+  );
 
   return response.data;
 };

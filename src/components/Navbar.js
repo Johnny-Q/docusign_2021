@@ -9,9 +9,9 @@ export const DefaultNavbar = () => {
       <h1>AuditPal</h1>
       <div className="links">
         <Link to="/home">Home</Link>
-        <Link to="/about">About</Link>
+        {/* <Link to="/about">About</Link> */}
         <Link to="/login">Log In</Link>
-        <Link to="/test">Test</Link>
+        {/* <Link to="/test">Test</Link> */}
       </div>
     </div>
   );
@@ -22,21 +22,75 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <h1 onClick={() => window.location.assign("/")}>AuditPal</h1>
+      <h1
+        onClick={() => window.location.assign("/")}
+        style={{ color: "#137547" }}
+      >
+        AuditPal
+      </h1>
       <div className="links">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
+        <Link
+          to="/"
+          style={{
+            color: "#137547",
+            textDecoration: "none",
+            fontSize: "1.5em",
+            marginLeft: "10px"
+          }}
+        >
+          Home
+        </Link>
+        {/* <Link
+          to="/about"
+          style={{
+            color: "#137547",
+            textDecoration: "none",
+            fontSize: "1.5em",
+            marginLeft: "10px"
+          }}
+        >
+          About
+        </Link> */}
         {isLoggedIn ? (
           <>
-            <Link to="/dashboard">Dashboard</Link>
-            <Link to="/logout">Log Out</Link>
+            <Link
+              to="/dashboard"
+              style={{
+                color: "#137547",
+                textDecoration: "none",
+                fontSize: "1.5em",
+                marginLeft: "10px"
+              }}
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/logout"
+              style={{
+                color: "#137547",
+                textDecoration: "none",
+                fontSize: "1.5em",
+                marginLeft: "10px"
+              }}
+            >
+              Log Out
+            </Link>
           </>
         ) : (
           <>
-            <Link to="/login">Log In</Link>
+            <Link
+              to="/login"
+              style={{
+                color: "#137547",
+                textDecoration: "none",
+                fontSize: "1.5em",
+                marginLeft: "10px"
+              }}
+            >
+              Log In
+            </Link>
           </>
         )}
-        <Link to="/test">Test</Link>
       </div>
     </div>
   );

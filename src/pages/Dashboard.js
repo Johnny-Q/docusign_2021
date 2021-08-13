@@ -2,36 +2,14 @@ import { useEffect, useState } from "react";
 import greenCircles from "../assets/greencircles.png";
 import axios from "axios";
 import { currentUser } from "../logic/auth";
+import { getAuditStatus, getReview } from "../logic/helpers";
 
 const AuditComponent = ({ audit, user }) => {
-  const actionText = () => {
-    if (
-      audit.facilitator === user._id &&
-      audit.status === "awaiting revisions"
-    ) {
-      return "Action required: pending revisions";
-    } else if (
-      audit.facilitator === user._id &&
-      audit.status === "awaiting responses"
-    ) {
-      return "Awaiting reviews";
-    } else if (
-      audit.cycles[audit.cycle - 1]?.reviews.includes(
-        review => review.author === user._id
-      ) === undefined
-    ) {
-      return "Action required: Review map";
-    } else if (
-      audit.cycles[audit.cycle - 1]?.reviews.includes(
-        review => review.author === user._id
-      ) &&
-      audit.status !== "completed"
-    ) {
-      return "Awaiting map modifications";
-    } else {
-      return "Audit completed";
-    }
-  };
+  const [action, setAction] = useState("");
+
+  useEffect(() => {
+    getAuditStatus(audit._id).then(auditStatus => setAction(auditStatus));
+  }, []);
 
   return (
     <div
@@ -45,7 +23,27 @@ const AuditComponent = ({ audit, user }) => {
         border: "2px solid lightgray",
         // backgroundColor: "rgba(0,0,0,0.1)",
         padding: "5px 20px 0 20px",
-        boxSizing: "border-box"
+        boxSizing: "border-box",
+        marginBottom: "30px",
+        cursor: "pointer"
+      }}
+      onClick={() => {
+        switch (action) {
+          case "Action required: pending revisions":
+            window.location.assign(`/editmap/${audit.webmapID}`);
+            break;
+          case "Awaiting reviewers":
+            window.location.assign(`/viewmap/${audit.webmapID}`);
+            break;
+          case "Awaiting map modifications":
+            window.location.assign(`/viewmap/${audit.webmapID}`);
+            break;
+          case "Action required: Review map":
+            window.location.assign(`/reviewmap/${audit.webmapID}`);
+            break;
+          default:
+            window.location.assign(`/viewmap/${audit.webmapID}`);
+        }
       }}
     >
       <div
@@ -63,7 +61,7 @@ const AuditComponent = ({ audit, user }) => {
       <p style={{ margin: 0 }}>
         Role: {audit.facilitator === user._id ? "Facilitator" : "Reviewer"}
       </p>
-      <h4>{actionText()}</h4>
+      <h4>{action}</h4>
     </div>
   );
 };
@@ -77,7 +75,7 @@ const Dashboard = () => {
     currentUser().then(user => setUser(user));
 
     axios
-      .get("http://localhost:5000/api/get-audits", {
+      .get("https://docusign2021.herokuapp.com/api/get-audits", {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`
         }
@@ -135,8 +133,6 @@ const Dashboard = () => {
               ))}
             </>
           )}
-          <br />
-          <br />
           <h1>Past Audits</h1>
           {pastAudits.length === 0 ? (
             <>You do not have any past audits</>

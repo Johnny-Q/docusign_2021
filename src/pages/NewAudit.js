@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { getReviewers, startAudit } from "../logic/helpers";
+import { currentUser } from "../logic/auth";
+import { getReviewers, startAudit, useInterval } from "../logic/helpers";
 
 // const Select = styled.select`
 //   width: 100%;
@@ -21,6 +22,16 @@ const NewAudit = () => {
   const [id, setId] = useState("");
   const [reviewers, setReviewers] = useState([]);
   const [reviewerOptions, setReviewerOptions] = useState([]);
+  const [user, setUser] = useState({});
+
+  useInterval(
+    () => {
+      currentUser().then(user => {
+        setUser(user);
+      });
+    },
+    !user.docusign ? 1000 : null
+  );
 
   useEffect(() => {
     getReviewers().then(reviewers => {
@@ -33,6 +44,7 @@ const NewAudit = () => {
       });
       setReviewerOptions(reviewerList);
     });
+    currentUser().then(user => setUser(user));
   }, []);
 
   const handleSubmit = () => {
@@ -99,18 +111,37 @@ const NewAudit = () => {
         </div>
 
         <br />
-        <button
-          style={{
-            borderRadius: 99,
-            padding: "10px 20px 10px 20px",
-            textAlign: "center",
-            fontSize: "1em",
-            width: "100%"
-          }}
-          onClick={handleSubmit}
-        >
-          Create Audit
-        </button>
+        {user.docusign ? (
+          <button
+            style={{
+              borderRadius: 99,
+              padding: "10px 20px 10px 20px",
+              textAlign: "center",
+              fontSize: "1em",
+              width: "100%"
+            }}
+            onClick={handleSubmit}
+          >
+            Create Audit
+          </button>
+        ) : (
+          <button
+            style={{
+              borderRadius: 99,
+              padding: "10px 20px 10px 20px",
+              textAlign: "center",
+              fontSize: "1em",
+              width: "100%"
+            }}
+            onClick={() =>
+              window.open(
+                `https://account-d.docusign.com/oauth/auth?response_type=token&scope=signature&client_id=${process.env.REACT_APP_DOCUSIGN_INTEGRATION_KEY}&redirect_uri=${process.env.REACT_APP_DOCUSIGN_REDIRECT_URI}`
+              )
+            }
+          >
+            Connect DocuSign
+          </button>
+        )}
       </div>
     </div>
   );

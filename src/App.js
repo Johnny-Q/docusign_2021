@@ -8,8 +8,13 @@ import LogIn from "./pages/LogIn";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import NewAudit from "./pages/NewAudit";
+import ReviewMap from "./pages/ReviewMap";
+import EditMap from "./pages/EditMap";
+import ViewMap from "./pages/ViewMap";
 import LogOut from "./pages/LogOut";
-import GraphicsPopupTest from "./pages/GraphicsPopupTest";
+import OAuthHandler from "./pages/OAuthHandler";
+// import GraphicsPopupTest from "./pages/GraphicsPopupTest";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -33,8 +38,12 @@ function App() {
       <Route path="/register" exact component={Register} />
       <Route path="/dashboard" exact component={Dashboard} />
       <Route path="/newaudit" exact component={NewAudit} />
+      <Route path="/reviewmap/:id" children={<ReviewMap />} />
+      <Route path="/editmap/:id" children={<EditMap />} />
+      <Route path="/viewmap/:id" children={<ViewMap />} />
       <Route path="/logout" exact component={LogOut} />
-      <Route path="/test" exact component={GraphicsPopupTest} />
+      {/* <Route path="/test" exact component={Test} /> */}
+      <Route path="/oauth/docusign_redirect" component={OAuthHandler} />
     </div>
   );
 }
