@@ -465,7 +465,7 @@ module.exports = function (app) {
       const audit = await Audit.findOne({ _id: auditID }).exec();
       audit.cycle = audit.cycle + 1;
       audit.status = "awaiting responses";
-      audit.cycles[audit.cycle - 1].push({
+      audit.cycles.push({
         reviews: [],
         comments: ""
       });

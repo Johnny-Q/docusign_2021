@@ -35,7 +35,8 @@
     "eject": "react-scripts eject",
     "server": "nodemon server/index",
     "dev": "concurrently \"npm start\" \"npm run server\"",
-    "deploy": "node server/index"
+    "deploy": "node server/index",
+    "heroku-postbuild": ""
   },
   "eslintConfig": {
     "extends": [
@@ -54,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
